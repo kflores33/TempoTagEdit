@@ -46,6 +46,8 @@ public class Metronome : MonoBehaviour
     public GameObject down;
     public GameObject empty;
 
+    public GameObject turnIndicator;
+
     public GameObject[] enemySlots;
 
     public GameObject[] playerSlots;
@@ -100,6 +102,7 @@ public class Metronome : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        turnIndicator.SetActive(false);
         idlePose.SetActive(true);
         metronome = GetComponent<AudioSource>();
         metronomeSpeed = metronomeSpeed1.length;
@@ -282,6 +285,7 @@ public class Metronome : MonoBehaviour
                 metronome.Stop();
                 timer = 5;
                 yield return new WaitForSeconds(1.5f);
+                turnIndicator.SetActive(false);
                 restartScreen.SetActive(true);
                 restartButton.SetActive(true);
                 finalScoreText.text = score.ToString();
@@ -325,6 +329,7 @@ public class Metronome : MonoBehaviour
 
             if (!gameActive)
             {
+                turnIndicator.SetActive(false);
                 break;
             }
 
@@ -371,6 +376,7 @@ public class Metronome : MonoBehaviour
         yield return new WaitForSeconds(1f);
         countdownGo.SetActive(false);
         gameActive = true;
+            turnIndicator.SetActive(true);
 
         metronomeSpeed = metronomeSpeed1.length;
         metronome.clip = metronomeSpeed1;
