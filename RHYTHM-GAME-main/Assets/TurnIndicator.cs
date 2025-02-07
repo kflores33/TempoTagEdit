@@ -11,6 +11,8 @@ public class TurnIndicator : MonoBehaviour
 
     public Metronome metronomeScript;
 
+    public Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {

@@ -16,6 +16,8 @@ public class Metronome : MonoBehaviour
 
     public AudioSource clap;
 
+    public AudioSource turnSFX;
+
     public AudioClip metronomeSpeed1;
     public AudioClip metronomeSpeed2;
     public AudioClip metronomeSpeed3;
@@ -239,7 +241,6 @@ public class Metronome : MonoBehaviour
                     }
                 }
             }
-
             yield return new WaitForSeconds(metronomeSpeed / 4);
         }
         foreach (Transform child in enemySlotsObject.transform)
@@ -254,6 +255,7 @@ public class Metronome : MonoBehaviour
             pose.SetActive(false);
         }
         enemyIdle.SetActive(true);
+
         playerTurn = true;
     }
 
@@ -381,13 +383,22 @@ public class Metronome : MonoBehaviour
         metronomeSpeed = metronomeSpeed1.length;
         metronome.clip = metronomeSpeed1;
         metronome.Play();
+
         while (gameActive)
         {
             playerTurn = false;
 
+            turnIndicator.GetComponent<Animator>().Play("icon_pulse");
+
             StartCoroutine(makeEnemyChoices());
 
-            yield return new WaitForSeconds(metronomeSpeed);
+            yield return new WaitForSeconds(metronomeSpeed * 0.75f);
+
+            turnSFX.Play();
+
+            yield return new WaitForSeconds(metronomeSpeed * 0.25f);
+
+            turnIndicator.GetComponent<Animator>().Play("icon_pulse");
 
             StartCoroutine(playerChoices());
 
@@ -398,6 +409,9 @@ public class Metronome : MonoBehaviour
 
             if (timer >= 0 && timer < 1 && gameActive)
             {
+                //turnIndicator.GetComponent<Animator>().speed = metronomeSpeed;
+                //turnIndicator.GetComponent<Animator>().Play("icon_idle");
+
                 timer += 1f;
             }
             else if (timer >= 1 && timer < 2 && gameActive)
@@ -418,6 +432,9 @@ public class Metronome : MonoBehaviour
                     speedup.SetActive(false);
                     speedup1Shown = true;
                 }
+                //turnIndicator.GetComponent<Animator>().speed = metronomeSpeed;
+                //turnIndicator.GetComponent<Animator>().Play("icon_idle");
+
                 timer += 0.2f;
             }
             else if (timer >= 2 && timer < 3 && gameActive)
@@ -438,6 +455,9 @@ public class Metronome : MonoBehaviour
                     speedup.SetActive(false);
                     speedup2Shown = true;
                 }
+                //turnIndicator.GetComponent<Animator>().speed = metronomeSpeed * 2;
+                //turnIndicator.GetComponent<Animator>().Play("icon_idle");
+
                 timer += 0.1f;
             }
             else if (timer >= 3 && gameActive)
@@ -458,6 +478,9 @@ public class Metronome : MonoBehaviour
                     speedup.SetActive(false);
                     speedup3Shown = true;
                 }
+                //turnIndicator.GetComponent<Animator>().speed = metronomeSpeed * 4;
+                //turnIndicator.GetComponent<Animator>().Play("icon_idle");
+
                 timer += 0.1f;
             }
         }
