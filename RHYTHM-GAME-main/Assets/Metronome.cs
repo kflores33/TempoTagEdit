@@ -101,6 +101,8 @@ public class Metronome : MonoBehaviour
 
     public bool holding = false;
 
+    public bool betweenTurns=false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -256,7 +258,8 @@ public class Metronome : MonoBehaviour
         }
         enemyIdle.SetActive(true);
 
-        playerTurn = true;
+        //playerTurn = true;
+        betweenTurns = true;
     }
 
     public IEnumerator falloffTime(string enemySelection)
@@ -349,6 +352,34 @@ public class Metronome : MonoBehaviour
         inputString = "empty";
     }
 
+    public IEnumerator countdownToInput()
+    {
+        countdown3.SetActive(true);
+        yield return new WaitForSeconds(metronomeSpeed /4);
+        countdown3.SetActive(false);
+        //flash.SetActive(true);
+        //yield return new WaitForSeconds(metronomeSpeed * 0.02f);
+        //flash.SetActive(false);
+        countdown2.SetActive(true);
+        yield return new WaitForSeconds(metronomeSpeed /4);
+        countdown2.SetActive(false);
+        //flash.SetActive(true);
+        //yield return new WaitForSeconds(metronomeSpeed * 0.02f);
+        //flash.SetActive(false);
+        countdown1.SetActive(true);
+        yield return new WaitForSeconds(metronomeSpeed /4);
+        countdown1.SetActive(false);
+        //flash.SetActive(true);
+        //yield return new WaitForSeconds(metronomeSpeed * 0.02f);
+        //flash.SetActive(false);
+        countdownGo.SetActive(true);
+        yield return new WaitForSeconds(metronomeSpeed /4);
+        countdownGo.SetActive(false);
+
+        betweenTurns = false;
+        playerTurn = true;
+    }
+
     public IEnumerator gameLoop()
     {
         yield return new WaitForSeconds(0.5f);
@@ -392,13 +423,19 @@ public class Metronome : MonoBehaviour
 
             StartCoroutine(makeEnemyChoices());
 
-            yield return new WaitForSeconds(metronomeSpeed * 0.75f);
+            //yield return new WaitForSeconds(metronomeSpeed * 0.75f);
 
-            turnSFX.Play();
+            //turnSFX.Play();
 
-            yield return new WaitForSeconds(metronomeSpeed * 0.25f);
+            //yield return new WaitForSeconds(metronomeSpeed * 0.25f);
+
+            yield return new WaitForSeconds(metronomeSpeed);
 
             turnIndicator.GetComponent<Animator>().Play("icon_pulse");
+
+            StartCoroutine(countdownToInput());
+
+            yield return new WaitForSeconds(metronomeSpeed);
 
             StartCoroutine(playerChoices());
 
