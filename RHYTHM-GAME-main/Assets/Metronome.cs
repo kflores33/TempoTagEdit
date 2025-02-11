@@ -103,6 +103,8 @@ public class Metronome : MonoBehaviour
 
     public bool betweenTurns=false;
 
+    public bool tutorialShow = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -354,24 +356,27 @@ public class Metronome : MonoBehaviour
 
     public IEnumerator countdownToInput()
     {
-        countdown3.SetActive(true);
-        yield return new WaitForSeconds(metronomeSpeed /4);
-        countdown3.SetActive(false);
-        //flash.SetActive(true);
-        //yield return new WaitForSeconds(metronomeSpeed * 0.02f);
-        //flash.SetActive(false);
-        countdown2.SetActive(true);
-        yield return new WaitForSeconds(metronomeSpeed /4);
-        countdown2.SetActive(false);
-        //flash.SetActive(true);
-        //yield return new WaitForSeconds(metronomeSpeed * 0.02f);
-        //flash.SetActive(false);
-        countdown1.SetActive(true);
-        yield return new WaitForSeconds(metronomeSpeed /4);
-        countdown1.SetActive(false);
-        //flash.SetActive(true);
-        //yield return new WaitForSeconds(metronomeSpeed * 0.02f);
-        //flash.SetActive(false);
+        if (metronomeSpeed == metronomeSpeed1.length)
+        {
+            countdown3.SetActive(true);
+            yield return new WaitForSeconds(metronomeSpeed / 4);
+            countdown3.SetActive(false);
+        }
+
+        if (metronomeSpeed == metronomeSpeed2.length || metronomeSpeed == metronomeSpeed1.length)
+        {
+            countdown2.SetActive(true);
+            yield return new WaitForSeconds(metronomeSpeed / 4);
+            countdown2.SetActive(false);
+        }
+
+        if(metronomeSpeed == metronomeSpeed3.length || metronomeSpeed == metronomeSpeed2.length || metronomeSpeed == metronomeSpeed1.length)
+        {
+            countdown1.SetActive(true);
+            yield return new WaitForSeconds(metronomeSpeed /4);
+            countdown1.SetActive(false);
+        }
+
         countdownGo.SetActive(true);
         yield return new WaitForSeconds(metronomeSpeed /4);
         countdownGo.SetActive(false);
@@ -429,13 +434,29 @@ public class Metronome : MonoBehaviour
 
             //yield return new WaitForSeconds(metronomeSpeed * 0.25f);
 
-            yield return new WaitForSeconds(metronomeSpeed);
+            if (tutorialShow)
+            {
+                yield return new WaitForSeconds(metronomeSpeed);
 
-            turnIndicator.GetComponent<Animator>().Play("icon_pulse");
+                turnIndicator.GetComponent<Animator>().Play("icon_pulse");
 
-            StartCoroutine(countdownToInput());
+                StartCoroutine(countdownToInput());
+            }
 
-            yield return new WaitForSeconds(metronomeSpeed);
+            if (tutorialShow)
+            {
+                if (metronomeSpeed == metronomeSpeed1.length)
+                    yield return new WaitForSeconds(metronomeSpeed);
+                else if (metronomeSpeed <= metronomeSpeed2.length)
+                {
+                    yield return new WaitForSeconds(metronomeSpeed / 2);
+                }
+
+            }
+            else 
+            {
+                yield return new WaitForSeconds(metronomeSpeed);
+            }
 
             StartCoroutine(playerChoices());
 
@@ -471,7 +492,7 @@ public class Metronome : MonoBehaviour
                 }
                 //turnIndicator.GetComponent<Animator>().speed = metronomeSpeed;
                 //turnIndicator.GetComponent<Animator>().Play("icon_idle");
-
+                //tutorialShow = false;
                 timer += 0.2f;
             }
             else if (timer >= 2 && timer < 3 && gameActive)
