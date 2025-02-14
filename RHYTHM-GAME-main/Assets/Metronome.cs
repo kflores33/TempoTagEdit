@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using TMPro;
+using Cinemachine;
 
 public class Metronome : MonoBehaviour
 {
@@ -104,6 +105,8 @@ public class Metronome : MonoBehaviour
     public bool betweenTurns=false;
 
     public bool tutorialShow = true;
+
+    public Animator drivenCamera;
 
     // Start is called before the first frame update
     void Start()
@@ -292,6 +295,8 @@ public class Metronome : MonoBehaviour
                 metronome.Stop();
                 timer = 5;
                 yield return new WaitForSeconds(1.5f);
+                drivenCamera.SetTrigger("Idle");
+
                 turnIndicator.SetActive(false);
                 restartScreen.SetActive(true);
                 restartButton.SetActive(true);
@@ -426,6 +431,8 @@ public class Metronome : MonoBehaviour
 
             turnIndicator.GetComponent<Animator>().Play("icon_pulse");
 
+            drivenCamera.SetTrigger("Opp");
+
             StartCoroutine(makeEnemyChoices());
 
             //yield return new WaitForSeconds(metronomeSpeed * 0.75f);
@@ -439,6 +446,8 @@ public class Metronome : MonoBehaviour
                 yield return new WaitForSeconds(metronomeSpeed);
 
                 turnIndicator.GetComponent<Animator>().Play("icon_pulse");
+
+                drivenCamera.SetTrigger("Idle");
 
                 StartCoroutine(countdownToInput());
             }
@@ -458,6 +467,8 @@ public class Metronome : MonoBehaviour
                 yield return new WaitForSeconds(metronomeSpeed);
             }
 
+            drivenCamera.SetTrigger("Player");
+
             StartCoroutine(playerChoices());
 
             yield return new WaitForSeconds(metronomeSpeed);
@@ -476,6 +487,7 @@ public class Metronome : MonoBehaviour
             {
                 if (!speedup1Shown)
                 {
+                    drivenCamera.SetTrigger("Idle");
                     flash.SetActive(true);
                     yield return new WaitForSeconds(0.01f);
                     flash.SetActive(false);
@@ -499,6 +511,7 @@ public class Metronome : MonoBehaviour
             {
                 if (!speedup2Shown)
                 {
+                    drivenCamera.SetTrigger("Idle");
                     flash.SetActive(true);
                     yield return new WaitForSeconds(0.01f);
                     flash.SetActive(false);
@@ -522,6 +535,7 @@ public class Metronome : MonoBehaviour
             {
                 if (!speedup3Shown)
                 {
+                    drivenCamera.SetTrigger("Idle");
                     flash.SetActive(true);
                     yield return new WaitForSeconds(0.01f);
                     flash.SetActive(false);

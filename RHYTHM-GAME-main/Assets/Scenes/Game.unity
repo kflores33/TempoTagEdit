@@ -234,7 +234,7 @@ MonoBehaviour:
   m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 5
+    OrthographicSize: 4.8
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -260,7 +260,7 @@ Transform:
   m_GameObject: {fileID: 60435660}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3, y: 0, z: -9}
+  m_LocalPosition: {x: 2, y: 0, z: -9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1299,6 +1299,7 @@ MonoBehaviour:
   holding: 0
   betweenTurns: 0
   tutorialShow: 1
+  drivenCamera: {fileID: 1624876929}
 --- !u!4 &438071324
 Transform:
   m_ObjectHideFlags: 0
@@ -7303,7 +7304,7 @@ MonoBehaviour:
   m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 5
+    OrthographicSize: 4.8
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -7329,7 +7330,7 @@ Transform:
   m_GameObject: {fileID: 1505074204}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3, y: 0, z: -9}
+  m_LocalPosition: {x: -2, y: 0, z: -9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7540,7 +7541,7 @@ MonoBehaviour:
     m_ActivateAfter: 0
     m_MinDuration: 0
   - m_FullHash: -1822461695
-    m_VirtualCamera: {fileID: 1505074205}
+    m_VirtualCamera: {fileID: 60435661}
     m_ActivateAfter: 0
     m_MinDuration: 0
   m_DefaultBlend:
