@@ -107,6 +107,7 @@ public class Metronome : MonoBehaviour
     public bool tutorialShow = true;
 
     public Animator drivenCamera;
+    public Animator bkgd;
 
     // Start is called before the first frame update
     void Start()
@@ -368,14 +369,14 @@ public class Metronome : MonoBehaviour
             countdown3.SetActive(false);
         }
 
-        if (metronomeSpeed == metronomeSpeed2.length || metronomeSpeed == metronomeSpeed1.length)
+        if (/*metronomeSpeed == metronomeSpeed4.length || metronomeSpeed == metronomeSpeed3.length || metronomeSpeed == metronomeSpeed2.length ||*/ metronomeSpeed == metronomeSpeed1.length)
         {
             countdown2.SetActive(true);
             yield return new WaitForSeconds(metronomeSpeed / 4);
             countdown2.SetActive(false);
         }
 
-        if(metronomeSpeed == metronomeSpeed3.length || metronomeSpeed == metronomeSpeed2.length || metronomeSpeed == metronomeSpeed1.length)
+        if(metronomeSpeed == metronomeSpeed4.length || metronomeSpeed == metronomeSpeed3.length || metronomeSpeed == metronomeSpeed2.length || metronomeSpeed == metronomeSpeed1.length)
         {
             countdown1.SetActive(true);
             yield return new WaitForSeconds(metronomeSpeed /4);
@@ -390,8 +391,25 @@ public class Metronome : MonoBehaviour
         playerTurn = true;
     }
 
+    public IEnumerator Buffer()
+    {
+        countdownGo.SetActive(true);
+        yield return new WaitForSeconds(metronomeSpeed / 4);
+        countdownGo.SetActive(false);
+
+        betweenTurns = false;
+        playerTurn = true;
+    }
+
+    //public void SetBkgdSpeed(float mSpeed)
+    //{
+    //    bkgd.speed = mSpeed;
+    //}
+
     public IEnumerator gameLoop()
     {
+        bkgd.speed = 0.5f;
+
         yield return new WaitForSeconds(0.5f);
         countdownSFX.Play();
         flash.SetActive(true);
@@ -427,6 +445,9 @@ public class Metronome : MonoBehaviour
 
         while (gameActive)
         {
+
+            bkgd.Play("bkgd");
+
             playerTurn = false;
 
             turnIndicator.GetComponent<Animator>().Play("icon_pulse");
@@ -460,11 +481,19 @@ public class Metronome : MonoBehaviour
                 {
                     yield return new WaitForSeconds(metronomeSpeed / 2);
                 }
+                //else if (metronomeSpeed <= metronomeSpeed3.length)
+                //{
+                //    //yield return new WaitForSeconds((metronomeSpeed / 4));
+                //}
 
             }
             else 
             {
                 yield return new WaitForSeconds(metronomeSpeed);
+
+                //StartCoroutine(Buffer());
+
+                //yield return new WaitForSeconds(metronomeSpeed / 4);
             }
 
             drivenCamera.SetTrigger("Player");
@@ -554,6 +583,22 @@ public class Metronome : MonoBehaviour
                 //turnIndicator.GetComponent<Animator>().Play("icon_idle");
 
                 timer += 0.1f;
+            }            
+            if(metronomeSpeed == metronomeSpeed1.length)
+            {
+                bkgd.speed = 0.5f;
+            }
+            else if (metronomeSpeed == metronomeSpeed2.length)
+            {
+                bkgd.speed = 1.1f;
+            }
+            else if (metronomeSpeed == metronomeSpeed3.length)
+            {
+                bkgd.speed = 1.4f;
+            }
+            else if (metronomeSpeed == metronomeSpeed4.length)
+            {
+                bkgd.speed = 1.8f;
             }
         }
     }
