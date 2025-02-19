@@ -1510,7 +1510,7 @@ MonoBehaviour:
   playerSlotsObject: {fileID: 1447094290}
   gameActive: 0
   restartButton: {fileID: 1691995577}
-  scoreText: {fileID: 1964611505}
+  scoreText: {fileID: 1018108361}
   finalScoreText: {fileID: 982012580}
   finalScoreTextGameObject: {fileID: 982012578}
   finalScoreHeader: {fileID: 324785748}
