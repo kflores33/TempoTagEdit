@@ -26,10 +26,16 @@ public class TurnIndicator : MonoBehaviour
         {
             if (metronomeScript.playerTurn)
             {
+                SpriteRenderer.enabled = true;
                 SpriteRenderer.sprite = PlayerTurnSprite;
             }
-            else
+            else if (metronomeScript.betweenTurns) // if between turns is true, disable sprite renderer
             {
+                SpriteRenderer.enabled = false;
+            }
+            else if (!metronomeScript.playerTurn)
+            {
+                SpriteRenderer.enabled = true;
                 SpriteRenderer.sprite = OppTurnSprite;
             }
         }
